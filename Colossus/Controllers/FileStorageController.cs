@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Colossus.Data;
-using Colossus.ViewModel;
+﻿using AutoMapper;
 using Colossus.DomainModel;
 using Colossus.Repository.Interfaces;
-using AutoMapper;
+using Colossus.ViewModel;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Security.AccessControl;
+using System.Threading.Tasks;
 
 namespace Colossus.Controllers
 {
@@ -50,12 +48,15 @@ namespace Colossus.Controllers
         }
 
         [HttpPost("CreateFolder")]
-        public IActionResult Post([FromBody] FileStorageViewModel model)
+        public IActionResult Post(string folderName, string parentfolderName, string filePath)
         {
             try
-            {
+            {   
+                //DirectoryInfo di = Directory.CreateDirectory(@"filePath");
+            
+                var model = new FileStorageViewModel() { FolderName = folderName, ParentFolderName = parentfolderName, FilePath = filePath, FileCreationDate = DateTime.UtcNow };
                 if (model != null)
-                {
+                {   
                     var newFolder = _mapper.Map<FileStorageViewModel, FileStoreage>(model);
 
                     var outPut = _fileStorageRepository.Create(newFolder).Result;
