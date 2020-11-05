@@ -31,7 +31,7 @@ namespace Colossus.Controllers
 
        
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<FileStorageViewModel>>> GetFileStorageViewModel()
+        public async Task<ActionResult<IEnumerable<FileStorageViewModel>>> GetFileStorage()
         {
             try
             {
